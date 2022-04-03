@@ -1,6 +1,5 @@
 package com.escala.app.controllers;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import com.escala.app.dtos.FranchiseMostFamousDTO;
@@ -24,49 +23,49 @@ public class DataProcessController {
     private @Autowired CompositionRepository repository;
 
     @GetMapping("/TeamToDate")
-    public ResponseEntity<List<TeamToDateDTO>> getTeamToDate(@RequestParam LocalDate date) {
+    public ResponseEntity<List<TeamToDateDTO>> getTeamToDate(@RequestParam String date) {
         return ResponseEntity.ok(repository.findTeamToDate(date));
     }
 
     @GetMapping("/MemberMostUsed")
     public ResponseEntity<MemberMostUsedDTO> getMemberMostUsed(
-        @RequestParam LocalDate initialDate,
-        @RequestParam LocalDate finalDate) {
+        @RequestParam String initialDate,
+        @RequestParam String finalDate) {
         return ResponseEntity.ok(repository.findMemberMostUsed(initialDate, finalDate));
     }
 
     @GetMapping("/TeamMostCommon")
     public ResponseEntity<List<TeamMostCommonDTO>> getTeamMostCommon(
-        @RequestParam LocalDate initialDate,
-        @RequestParam LocalDate finalDate) {
+        @RequestParam String initialDate,
+        @RequestParam String finalDate) {
         return ResponseEntity.ok(repository.findMembersMostUsed(initialDate, finalDate));
     }
 
     @GetMapping("/RoleMostCommon")
     public ResponseEntity<RoleMostCommonDTO> getRoleMostCommon(
-        @RequestParam LocalDate initialDate,
-        @RequestParam LocalDate finalDate) {
+        @RequestParam String initialDate,
+        @RequestParam String finalDate) {
         return ResponseEntity.ok(repository.findRoleMostUsed(initialDate, finalDate));
     }
 
     @GetMapping("/FranchiseMostFamous")
     public ResponseEntity<FranchiseMostFamousDTO> getFranchiseMostFamous(
-        @RequestParam LocalDate initialDate,
-        @RequestParam LocalDate finalDate) {
+        @RequestParam String initialDate,
+        @RequestParam String finalDate) {
         return ResponseEntity.ok(repository.findFranchiseMostFamous(initialDate, finalDate));
     }
 
     @GetMapping("/FranchiseMostFamous/list")
     public ResponseEntity<List<FranchiseMostFamousDTO>> getFranchiseMostFamousList(
-        @RequestParam LocalDate initialDate,
-        @RequestParam LocalDate finalDate) {
+        @RequestParam String initialDate,
+        @RequestParam String finalDate) {
         return ResponseEntity.ok(repository.findCountByFranchises(initialDate, finalDate));
     }
 
     @GetMapping("/RoleMostCommon/list")
     public ResponseEntity<List<RoleMostCommonDTO>> getRoleMostCommonList(
-        @RequestParam LocalDate initialDate,
-        @RequestParam LocalDate finalDate) {
+        @RequestParam String initialDate,
+        @RequestParam String finalDate) {
         return ResponseEntity.ok(repository.findCountByRoles(initialDate, finalDate));
     }
     

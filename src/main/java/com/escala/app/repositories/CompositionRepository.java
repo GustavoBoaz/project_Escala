@@ -1,6 +1,5 @@
 package com.escala.app.repositories;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import com.escala.app.dtos.FranchiseMostFamousDTO;
@@ -37,14 +36,14 @@ public interface CompositionRepository extends JpaRepository<CompositionModel, L
         "INNER JOIN tb_compositions c ON c.team_id = t.id " +
         "INNER JOIN tb_members m ON m.id = c.member_id " +
         "WHERE t.date = :date", nativeQuery = true)
-    List<TeamToDateDTO> findTeamToDate(@Param("date") LocalDate date);
+    List<TeamToDateDTO> findTeamToDate(@Param("date") String date);
 
     /**
      * Find member most used in date range.
      * 
      * @param initialDate
      * @param finalDate
-     * @return List<IntegranteMaisUsadoDTO>
+     * @return MemberMostUsedDTO
      */
     @Query(value =
         "SELECT m.name, COUNT(m.name) AS incidences " +
@@ -55,8 +54,8 @@ public interface CompositionRepository extends JpaRepository<CompositionModel, L
         "GROUP BY m.name " +
         "ORDER BY incidences DESC LIMIT 1", nativeQuery = true)
     public MemberMostUsedDTO findMemberMostUsed(
-        @Param("initialDate") LocalDate initialDate,
-        @Param("finalDate") LocalDate finalDate);
+        @Param("initialDate") String initialDate,
+        @Param("finalDate") String finalDate);
 
     /**
      * Find members most used in date range.
@@ -73,7 +72,9 @@ public interface CompositionRepository extends JpaRepository<CompositionModel, L
         "WHERE t.date BETWEEN :initialDate AND :finalDate " +
         "GROUP BY m.name " +
         "ORDER BY incidences DESC", nativeQuery = true)
-    public List<TeamMostCommonDTO> findMembersMostUsed(LocalDate initialDate, LocalDate finalDate);
+    public List<TeamMostCommonDTO> findMembersMostUsed(
+        @Param("initialDate") String initialDate,
+        @Param("finalDate") String finalDate);
 
     /**
      * Find role most used in date range.
@@ -90,7 +91,9 @@ public interface CompositionRepository extends JpaRepository<CompositionModel, L
         "WHERE t.date BETWEEN :initialDate AND :finalDate " +
         "GROUP BY m.role " +
         "ORDER BY incidences DESC LIMIT 1", nativeQuery = true)
-    public RoleMostCommonDTO findRoleMostUsed(LocalDate initialDate, LocalDate finalDate);
+    public RoleMostCommonDTO findRoleMostUsed(
+        @Param("initialDate") String initialDate,
+        @Param("finalDate") String finalDate);
 
     /**
      * Find franchise most famous in date range.
@@ -107,7 +110,9 @@ public interface CompositionRepository extends JpaRepository<CompositionModel, L
         "WHERE t.date BETWEEN :initialDate AND :finalDate " +
         "GROUP BY m.franchise " +
         "ORDER BY incidences DESC LIMIT 1", nativeQuery = true)
-    public FranchiseMostFamousDTO findFranchiseMostFamous(LocalDate initialDate, LocalDate finalDate);
+    public FranchiseMostFamousDTO findFranchiseMostFamous(
+        @Param("initialDate") String initialDate,
+        @Param("finalDate") String finalDate);
 
     /**
      * Find count by franchises in date range.
@@ -124,7 +129,9 @@ public interface CompositionRepository extends JpaRepository<CompositionModel, L
         "WHERE t.date BETWEEN :initialDate AND :finalDate " +
         "GROUP BY m.franchise " +
         "ORDER BY incidences DESC", nativeQuery = true)
-    public List<FranchiseMostFamousDTO> findCountByFranchises(LocalDate initialDate, LocalDate finalDate);
+    public List<FranchiseMostFamousDTO> findCountByFranchises(
+        @Param("initialDate") String initialDate, 
+        @Param("finalDate") String finalDate);
 
     /**
      * Find count by roles in date range.
@@ -141,5 +148,7 @@ public interface CompositionRepository extends JpaRepository<CompositionModel, L
         "WHERE t.date BETWEEN :initialDate AND :finalDate " +
         "GROUP BY m.role " +
         "ORDER BY incidences DESC", nativeQuery = true)
-    public List<RoleMostCommonDTO> findCountByRoles(LocalDate initialDate, LocalDate finalDate);
+    public List<RoleMostCommonDTO> findCountByRoles(
+        @Param("initialDate") String initialDate,
+        @Param("finalDate") String finalDate);
 }

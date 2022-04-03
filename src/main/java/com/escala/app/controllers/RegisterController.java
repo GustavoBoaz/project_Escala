@@ -1,5 +1,7 @@
 package com.escala.app.controllers;
 
+import java.time.LocalDate;
+
 import javax.validation.Valid;
 
 import com.escala.app.dtos.MemberRegisterDTO;
@@ -44,8 +46,8 @@ public class RegisterController {
 
     @PostMapping("/team")
     public ResponseEntity<TeamModel> registerTeam(@Valid @RequestBody TeamRegisterDTO team) {
-            
-        newTeam = new TeamModel(team.getDate());
+        LocalDate date = LocalDate.parse(team.getDate());
+        newTeam = new TeamModel(date);
         
         return ResponseEntity.ok(teamRepository.save(newTeam));
     }

@@ -1,7 +1,5 @@
 package com.escala.app.dtos;
 
-import java.time.LocalDate;
-
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -14,22 +12,22 @@ import javax.validation.constraints.NotBlank;
 public class TeamRegisterDTO {
     
     // Admin defined
-    private @NotBlank LocalDate date;
+    private @NotBlank String date;
 
     // Constructors
     public TeamRegisterDTO() {
     }
 
-    public TeamRegisterDTO(LocalDate date) {
+    public TeamRegisterDTO(String date) {
         this.date = date;
     }
 
     // Getters and Setters
-    public LocalDate getDate() {
+    public String getDate() {
         return this.date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }
