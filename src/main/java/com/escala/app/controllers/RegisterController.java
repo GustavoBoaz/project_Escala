@@ -12,11 +12,13 @@ import com.escala.app.repositories.MemberRepository;
 import com.escala.app.repositories.TeamRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/v1/register")
@@ -49,8 +51,12 @@ public class RegisterController {
     }
 
     @PostMapping("/composition")
-    public ResponseEntity<CompositionModel> registerComposition(@RequestBody CompositionModel composition) {        
-        return ResponseEntity.ok(compositionRepository.save(composition));
+    public ResponseEntity<CompositionModel> registerComposition(@RequestBody CompositionModel composition) {   
+        
+        if (teamRepository.existsById(composition.getTeam().getId()) && memberRepository.existsById(composition.getMember().getId())) {
+            return ResponseEntity.ok(compositionRepository.save(composition));
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Team or Member not found");
     }
 
 }
